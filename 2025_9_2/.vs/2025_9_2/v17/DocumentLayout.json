@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{284FD7B9-DB12-4320-A052-9AF06A2E1A42}|2025_9_2\\2025_9_2.vcxproj|solutionrelative:2025_9_2\\SeqList.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{284FD7B9-DB12-4320-A052-9AF06A2E1A42}|2025_9_2\\2025_9_2.vcxproj|D:\\github\\cpp_code\\2025_9_2\\2025_9_2\\SeqList.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{284FD7B9-DB12-4320-A052-9AF06A2E1A42}|2025_9_2\\2025_9_2.vcxproj|solutionrelative:2025_9_2\\SeqList.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{284FD7B9-DB12-4320-A052-9AF06A2E1A42}|2025_9_2\\2025_9_2.vcxproj|D:\\github\\cpp_code\\2025_9_2\\2025_9_2\\test.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{284FD7B9-DB12-4320-A052-9AF06A2E1A42}|2025_9_2\\2025_9_2.vcxproj|solutionrelative:2025_9_2\\test.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284FD7B9-DB12-4320-A052-9AF06A2E1A42}|2025_9_2\\2025_9_2.vcxproj|D:\\github\\cpp_code\\2025_9_2\\2025_9_2\\SeqList.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{284FD7B9-DB12-4320-A052-9AF06A2E1A42}|2025_9_2\\2025_9_2.vcxproj|solutionrelative:2025_9_2\\SeqList.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,22 +22,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "test.c",
-              "DocumentMoniker": "D:\\github\\cpp_code\\2025_9_2\\2025_9_2\\test.c",
-              "RelativeDocumentMoniker": "2025_9_2\\test.c",
-              "ToolTip": "D:\\github\\cpp_code\\2025_9_2\\2025_9_2\\test.c",
-              "RelativeToolTip": "2025_9_2\\test.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-09-02T14:12:49.351Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -46,7 +32,7 @@
               "RelativeDocumentMoniker": "2025_9_2\\SeqList.c",
               "ToolTip": "D:\\github\\cpp_code\\2025_9_2\\2025_9_2\\SeqList.c",
               "RelativeToolTip": "2025_9_2\\SeqList.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2025-09-02T14:13:08.333Z",
               "IsPinned": true,
@@ -55,12 +41,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "test.c",
+              "DocumentMoniker": "D:\\github\\cpp_code\\2025_9_2\\2025_9_2\\test.c",
+              "RelativeDocumentMoniker": "2025_9_2\\test.c",
+              "ToolTip": "D:\\github\\cpp_code\\2025_9_2\\2025_9_2\\test.c",
+              "RelativeToolTip": "2025_9_2\\test.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-09-02T14:12:49.351Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "SeqList.h",
               "DocumentMoniker": "D:\\github\\cpp_code\\2025_9_2\\2025_9_2\\SeqList.h",
               "RelativeDocumentMoniker": "2025_9_2\\SeqList.h",
               "ToolTip": "D:\\github\\cpp_code\\2025_9_2\\2025_9_2\\SeqList.h",
               "RelativeToolTip": "2025_9_2\\SeqList.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-09-02T14:12:37.461Z",
               "EditorCaption": ""
