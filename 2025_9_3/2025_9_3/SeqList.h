@@ -3,8 +3,9 @@
 #include <stdio.h>
 #include<assert.h>
 #include<stdlib.h>
+#include "Contact.h"
 #define N 4
-#define  SeqListData int
+typedef struct PersonInfo SeqListData;
 typedef struct SeqList
 {
 	SeqListData* a;
