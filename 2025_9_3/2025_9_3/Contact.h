@@ -9,7 +9,7 @@ typedef struct PersonInfo
 	char name[NAME_MAX];
 	char gender[GENDER_MAX];
 	int age;
-	int tel[TEL_MAX];
+	char tel[TEL_MAX];
 	char adress[ADRESS_MAX];
 } PeoInfo;
 
@@ -23,5 +23,8 @@ void showContact(Contact* ps);
 
 void FindContact(Contact* ps);
 
+void ModifyContact(Contact* ps);
+
+int find_by_name(Contact* ps, char* name);
 
 

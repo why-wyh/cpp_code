@@ -1,16 +1,22 @@
 #define _CRT_SECURE_NO_WARNINGS 
 #include"SeqList.h"
-void testContact1(Contact*p)
+
+void testContact1()
 {
-   
-	ContactInit(p);
-	addContact(p);
-	//addContact(p);
-	showContact(p);
+	Contact con;
+	ContactInit(&con);
+	addContact(&con);
+	addContact(&con);
+	showContact(&con);
+	//FindContact(&con);
+	//delContact(&con);
+	//showContact(&con);
+	ModifyContact(&con);
+	showContact(&con);
 }
 int main()
 {
-	Contact con;
-	testContact1(&con);
+	
+	testContact1();
 	return 0;
 }
