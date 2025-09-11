@@ -24,7 +24,7 @@ SLNode* SLNode_buy_Node(SLDATA x)
 }
 void SLNodepushback(SLNode** pphead, SLDATA x)
 {
-
+	assert(pphead);
 	SLNode* newnode = SLNode_buy_Node(x);
 	if (*pphead == NULL)
 	{
@@ -42,6 +42,7 @@ void SLNodepushback(SLNode** pphead, SLDATA x)
 }
 void SLNodepopback(SLNode** pphead)
 {
+	assert(pphead && *pphead);
 	SLNode* ptail = *pphead;
 	SLNode* pcur = *pphead;
 	while (ptail->next)
@@ -55,6 +56,7 @@ void SLNodepopback(SLNode** pphead)
 }
 void SLNodepushFront(SLNode** pphead, SLDATA x)
 {
+	assert(pphead);
 	SLNode* newnode = SLNode_buy_Node(x);
 	if (*pphead == NULL)
 	{
@@ -68,13 +70,98 @@ void SLNodepushFront(SLNode** pphead, SLDATA x)
 }
 void SLNodepopFront(SLNode** pphead)
 {
-	if (*pphead == NULL)
+	assert(pphead&&*pphead);
+	if ((*pphead)->next==NULL)
 	{
-		printf("Á´±íÎª¿ÕÉ¾³ýÊ§°Ü¡£\n");
+		free(*pphead);
+		*pphead = NULL;
 	}
 	else
 	{
+		SLNode* del = *pphead;
 		*pphead = (*pphead)->next;
+		free(del);
+		del = NULL;
 	}
 }
+SLNode* SLNodeFind(SLNode* phead, SLDATA x)
+{
+	assert(phead);
+	SLNode* pcur = phead;
+	while (pcur)
+	{
+		if (pcur->a == x)
+		{
+			return pcur;
+		}
+		pcur = pcur->next;
+	}
+	return NULL;
+}
+void SLInsert(SLNode** pphead, SLNode* pos, SLDATA x)
+{
+	assert(pphead && pos && *pphead);
+	SLNode* newnode = SLNode_buy_Node(x);
+	SLNode* prev = *pphead;
+	if (pos == *pphead)
+	{
+		SLNodepushFront(pphead, x);
+	}
+	else
+	{
+		while (prev->next != pos)
+		{
+			prev = prev->next;
+		}
+		prev->next = newnode;
+		newnode->next = pos;
+	}
+}
+void SLErase(SLNode** pphead, SLNode* pos)
+{
+	assert(pphead && pos && *pphead);
+	SLNode* prev = *pphead;
+	if (pos == *pphead)
+	{
+		SLNodepopFront(pphead);
+	}
+	else
+	{
+		while (prev->next != pos)
+		{
+			prev = prev->next;
+		}
+		prev->next = pos->next;
+		free(pos);
+		pos = NULL;
+	}
+}
+void SLInsertAfter(SLNode* pos, SLDATA x)
+{
+	SLNode* newnode = SLNode_buy_Node(x);
+	newnode->next = pos->next;
+	pos->next = newnode;
+}
+void SLEraseAfter(SLNode* pos)
+{
+	assert(pos&&pos->next);
+	SLNode* pcur = pos->next;
+	pos->next = pcur->next;
+	free(pcur);
+	pcur = NULL;
+}
+void SListDesTroy(SLNode** pphead)
+{
+	SLNode* pcur = *pphead;
+	while (pcur)
+	{
+		SLNode* next = pcur->next;
+		free(pcur);
+		pcur = NULL;
+		pcur = next;
+	}
+	*pphead = NULL;
+}
+
+
 
