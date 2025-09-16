@@ -56,3 +56,33 @@ void LTPopFront(LTNode* phead)
 	del->next->prev = phead;
 	del->prev->next = del->next;
 }
+LTNode* LTFind(LTNode* phead, LTDATA x)
+{
+	LTNode* pcur = phead->next;
+	while (pcur != phead)
+	{
+		if (pcur->x == x)
+		{
+			return pcur;
+		}
+		pcur = pcur->next;
+	}
+	return 0;
+}
+void LTInsert(LTNode* pos, LTDATA x)
+{
+	LTNode* new = buynewnode(x);
+	new->prev = pos;
+	new->next = pos->next;
+
+	pos->next->prev = new;
+	pos->next = new;
+}
+void LTErase(LTNode* pos)
+{
+	LTNode* del = pos;
+	pos->prev->next = pos->next;
+	del->next->prev = pos->prev;
+	free(del);
+	del = NULL;
+}

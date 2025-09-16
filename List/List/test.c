@@ -13,9 +13,11 @@ ListNodetest1()
 	LTprint(list);
 	LTPopFront(list);
 	LTprint(list);
-
-
-
+	LTNode* find = LTFind(list, 1);
+	LTInsert(find, 3);
+	LTprint(list);
+	LTErase(find);
+	LTprint(list);
 
 
 
