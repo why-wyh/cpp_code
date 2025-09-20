@@ -2,13 +2,15 @@
 #include "Snake.h"
 void test()
 {
-	GameStart();
+	Snake snake = { 0 };
+	GameStart(&snake);
 
 }
 
 
 int main()
 {
+	setlocale(LC_ALL, "");
 	test();
 	return 0;
 }

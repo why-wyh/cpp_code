@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS 
 #include <stdio.h>
 #include<stdlib.h>
+#include<stdbool.h>
 #include<locale.h>
 #include<Windows.h>
 enum driction
@@ -12,9 +13,10 @@ enum driction
 };
 enum game_state
 {
-	normal,
+	ok,
 	die_wall,
 	die_self,
+	end_normal
 
 };
 typedef struct SNode
@@ -33,8 +35,14 @@ typedef struct snake
 	int scor;
 	int sleep_time;
 
-}snake,* psnake;
+}Snake,* pSnake;
 
-void GameStart();
+void GameStart(pSnake snake);
+
+void Set_Pos(short x,short y);
+
+void Creat_Map();
+
+void Welcom_To_Game();
 void GameRun();
 void GameEnd();
