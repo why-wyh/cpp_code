@@ -43,6 +43,9 @@ void Set_Pos(short x,short y);
 
 void Creat_Map();
 
+void InitSnake(pSnake snake);
+
+
 void Welcom_To_Game();
 void GameRun();
 void GameEnd();

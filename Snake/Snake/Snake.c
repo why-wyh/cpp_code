@@ -55,12 +55,20 @@ void Welcom_To_Game()
 	system("pause");
 	system("cls");
 }
-
+void InitSnake(pSnake snake)
+{
+	snake->head = (pSNode)malloc(sizeof(SNode));
+	for (int i = 0; i < 5; i++)
+	{
+		;
+	}
+}
 void GameStart(pSnake snake)
 {
 	system("mode con cols=100 lines=30");
 	system("title 贪吃蛇");
 	Welcom_To_Game();
 	Creat_Map();
+	InitSnake(snake);
 
 }
