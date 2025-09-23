@@ -4,6 +4,10 @@
 #include<stdbool.h>
 #include<locale.h>
 #include<Windows.h>
+#include<time.h>
+#define  BODY L"¡ñ"
+# define WALL L"¡õ"
+# define FOOD L"¡ø"
 enum driction
 {
 	up = 1,
@@ -43,9 +47,14 @@ void Set_Pos(short x,short y);
 
 void Creat_Map();
 
-void InitSnake(pSnake snake);
+void Init_Snake(pSnake snake);
 
+void Create_food(pSnake snake);
+
+void Set_Snake(pSnake snake);
 
 void Welcom_To_Game();
-void GameRun();
-void GameEnd();
+
+void GameRun(pSnake snake);
+
+void GameEnd(pSnake snake);
