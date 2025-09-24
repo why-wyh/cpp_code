@@ -5,7 +5,7 @@ void test()
 	srand((unsigned int)time(NULL));
 	Snake snake = { 0 };
 	GameStart(&snake);
-
+	GameRun(&snake);
 }
 
 

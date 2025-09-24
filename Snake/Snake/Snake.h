@@ -8,6 +8,7 @@
 #define  BODY L"¡ñ"
 # define WALL L"¡õ"
 # define FOOD L"¡ø"
+#define KEY_PRESS(VK)  ( (GetAsyncKeyState(VK) & 0x1) ? 1 : 0 )
 enum driction
 {
 	up = 1,
@@ -54,6 +55,10 @@ void Create_food(pSnake snake);
 void Set_Snake(pSnake snake);
 
 void Welcom_To_Game();
+
+int NextIsFood(pSnake snake, pSNode net);
+
+void Snake_Move(pSnake snake, pSNode net);
 
 void GameRun(pSnake snake);
 

@@ -133,7 +133,136 @@ void GameStart(pSnake snake)
 	Create_food(snake);
 	Set_Snake(snake);
 }
+void printhelpinfo()
+{
+	Set_Pos(64, 15);
+	wprintf(L"不能穿墙，不能咬到自己\n");
+	Set_Pos(64, 16);
+	wprintf(L"用↑↓←→控制蛇的移动\n");
+	Set_Pos(64, 17);
+	wprintf(L"F3为加速F4为减速\n");
+	Set_Pos(64, 18);
+	wprintf(L"加速能获得更高的分数\n");
+	Set_Pos(64, 19);
+	wprintf(L"ESC退出游戏，空格暂停游戏\n");
+}
+void EatFood(pSnake snake, pSNode net)
+{
+	net->next = snake->head;
+	snake->head = net;
+	pSNode cur = snake->head;
+	while (cur)
+	{
+		Set_Pos(cur->x, cur->y);
+		wprintf(BODY);
+		cur = cur->next;
+	}
+	snake->scor += snake->food_wight;
+	Create_food(snake);
+}
+void NoFood(pSnake snake, pSNode net)
+{
+	net->next = snake->head;
+	snake->head = net;
+	pSNode cur = snake->head;
+	while (cur->next->next)
+	{
+		Set_Pos(cur->x, cur->y);
+		wprintf(BODY);
+		cur = cur->next;
+	}
+	Set_Pos(cur->next->x, cur->next->y);
+	wprintf(L" ");
+	free(cur->next);
+	cur->next = NULL;
+}
+int NextIsFood(pSnake snake,pSNode net)
+{
+	return((snake->food->x == net->x) && (snake->food->y == net->y));
+}
+void pause()
+{
+	while (1)
+	{
+		Sleep(200);
+		if (KEY_PRESS(VK_SPACE))
+			break;
+	}
+}
+void Snake_Move(pSnake snake,pSNode net)
+{
+	switch (snake->dirt)
+	{
+	case up:
+		net->x = snake->head->x;
+		net->y = snake->head->y - 1;
+		break;
+	case down:
+		net->x = snake->head->x;
+		net->y = snake->head->y +1;
+		break;
+	case left:
+		net->x = snake->head->x-2;
+		net->y = snake->head->y;
+		break;
+	case right:
+		net->x = snake->head->x + 2;
+		net->y = snake->head->y;
+		break;
+	}
+	if (NextIsFood(snake, net))
+	{
+		EatFood(snake, net);
+	}
+	else
+	{
+		NoFood(snake, net);
+	}
+	Sleep(200);
+
+}
 void GameRun(pSnake snake)
 {
-	;
+	do 
+	{
+		printhelpinfo();
+		Set_Pos(64, 10);
+		wprintf(L"得分：%2d ", snake->scor);
+		Set_Pos(64, 11);
+		wprintf(L"每个食物得分;%d分", snake->food_wight);
+
+		if (KEY_PRESS(VK_UP) && snake->dirt != down)
+			snake->dirt = up;
+		else if (KEY_PRESS(VK_DOWN) && snake->dirt != up)
+			snake->dirt = down;
+		else if (KEY_PRESS(VK_RIGHT) && snake->dirt != left)
+			snake->dirt = right;
+		else if (KEY_PRESS(VK_LEFT) && snake->dirt != right)
+			snake->dirt = left;
+		else if (KEY_PRESS(VK_SPACE))
+			pause();
+		else if (KEY_PRESS(VK_F3))
+		{
+			if (snake->sleep_time > 110)
+			{
+				snake->sleep_time -= 30;
+				snake->food_wight += 3;
+			}
+		}
+		else if (KEY_PRESS(VK_F4))
+		{
+			if (snake->food_wight > 1)
+			{
+				snake->sleep_time += 30;
+				snake->food_wight -= 3;
+			}
+		}
+		else if (KEY_PRESS(VK_ESCAPE))
+		{
+			snake->statement = end_normal;
+		}
+		pSNode next = (pSNode)malloc(sizeof(SNode));
+		Snake_Move(snake,next);
+	}
+	while(snake->statement==ok);
 }
