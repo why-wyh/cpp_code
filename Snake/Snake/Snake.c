@@ -91,7 +91,7 @@ void Create_food(pSnake snake)
 	agin:
 	do 
 	{
-		x = rand() % 55 + 2;
+		x = rand() % 53 + 2;
 	    y = rand() % 25 + 1;
 	} while (x % 2);
 	pSNode cur = snake->head;
@@ -189,6 +189,28 @@ void pause()
 			break;
 	}
 }
+void killbyself(pSnake snake)
+{
+	pSNode cur = snake->head->next;
+	while (cur)
+	{
+		if (cur->x == snake->head->x && cur->y == snake->head->y)
+		{
+			snake->statement = die_self;
+		}
+		cur = cur->next;
+	}
+}
+void killbywall(pSnake snake)
+{
+	if ((snake->head->x == 0)
+		|| (snake->head->x == 56)
+		|| (snake->head->y == 0)
+		|| (snake->head->y == 26))
+	{
+		snake->statement = die_wall;
+	}
+}
 void Snake_Move(pSnake snake,pSNode net)
 {
 	switch (snake->dirt)
@@ -218,7 +240,10 @@ void Snake_Move(pSnake snake,pSNode net)
 	{
 		NoFood(snake, net);
 	}
-	Sleep(200);
+	killbyself(snake);
+	killbywall(snake);
+	Sleep(snake->sleep_time);
+	
 
 }
 void GameRun(pSnake snake)
@@ -265,4 +290,37 @@ void GameRun(pSnake snake)
 		Snake_Move(snake,next);
 	}
 	while(snake->statement==ok);
+}
+void GameEnd(pSnake snake)
+{
+	pSNode cur = snake->head;
+	Set_Pos(24, 12);
+	switch (snake->statement)
+	{
+	case end_normal:
+		wprintf(L"退出游戏\n");
+		break;
+	case die_self:
+		wprintf(L"您咬到了自己\n");
+		break;
+	case die_wall:
+		wprintf(L"您撞到了墙\n");
+		break;
+	}
+	Set_Pos(24, 13);
+	wprintf(L"最终得分为：%d", snake->scor);
+	while (cur)
+	{
+		pSNode del = cur;
+		cur = cur->next;
+		free(del);
+	}
+	snake->head = NULL;
+	if (snake->food)
+	{
+		free(snake->food);
+		snake->food = NULL;
+	}
+	snake->scor = 0;
+	snake->statement = end_normal;
 }
