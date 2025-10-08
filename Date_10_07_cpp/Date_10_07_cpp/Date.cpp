@@ -67,6 +67,10 @@ Date Date::operator+(int day)const
 }
 Date Date::operator+=(int day)
 {
+	if (day < 0)
+	{
+		return *this -= -day;
+	}
 	this->_day += day;
 	while (this->_day > Getmonthday(this->_year, this->_month))
 	{
@@ -88,6 +92,10 @@ Date Date::operator-(int day)const
 }
 Date Date::operator-=(int day)
 {
+	if (day < 0)
+	{
+		return *this += -day;
+	}
     this->_day -= day;
     while (this->_day <= 0)
     {

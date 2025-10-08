@@ -29,6 +29,11 @@ void test()
 	d1.Print();
 	d1--;
 	d1.Print();
+	d1 -= -100;
+	d1.Print();
+	d1 += -100;
+	d1.Print();
+
 }
 int main()
 {
