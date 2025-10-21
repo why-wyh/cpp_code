@@ -3,7 +3,7 @@
 
 int main()
 {
-	//why::test1();
-	why::test2();
+	why::test1();
+	//why::test2();
 	return 0;
 }
