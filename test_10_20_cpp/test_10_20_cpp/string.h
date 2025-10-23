@@ -3,7 +3,7 @@
 #include <iostream>
 #include <assert.h>
 using namespace std;
- namespace why
+namespace why
 {
 	class string
 	{
@@ -23,6 +23,30 @@ using namespace std;
 			_capcity = _size;
 			_str = new char[_capcity + 1];
 			strcpy(_str, str);
+		}
+		string(const string& s)
+			:_str(nullptr)
+			, _size(0)
+			, _capcity(0)
+		{
+			string temp(s._str);
+			Swap(temp);
+		}
+		string& operator =(const string& s)
+		{
+			if (this != &s)
+			{
+				string temp(s);
+				Swap(temp);
+			}
+			return *this;
+		}
+		void Swap(string& s)
+		{
+			swap(_str, s._str);
+			swap(_size, s._size);
+			swap(_capcity, s._capcity);
+
 		}
 		~string()
 		{
@@ -47,14 +71,14 @@ using namespace std;
 			assert(i < _size);
 			return _str[i];
 		}
-        friend ostream& operator << (ostream& out, const string& str)
-        {
-        for (size_t i = 0; i < str.size(); i++)
-        {
-        out << str[i];
-        }
-        return out;
-        }
+		friend ostream& operator << (ostream& out, const string& str)
+		{
+			for (size_t i = 0; i < str.size(); i++)
+			{
+				out << str[i];
+			}
+			return out;
+		}
 		void reserve(size_t newcapacity)
 		{
 			if (newcapacity > _capcity) {
@@ -69,7 +93,7 @@ using namespace std;
 		{
 			if (_capcity == _size)
 			{
-				size_t newcapcity = _capcity == 0 ? 2 :_capcity * 2 + 1;
+				size_t newcapcity = _capcity == 0 ? 2 : _capcity * 2 + 1;
 				reserve(newcapcity);
 			}
 			size_t end = _size;
@@ -105,16 +129,17 @@ using namespace std;
 				size_t newcapcity = _capcity == 0 ? 2 : _capcity * 2 + 1;
 				reserve(newcapcity);
 			}
-			size_t end = _size;
-			while(end>=pos)
+			int end = _size;
+			while (end >= (int)pos)
 			{
 				_str[end + 1] = _str[end];
 				end--;
 			}
 			_str[pos] = ch;
 			_size++;
+			_str[_size] = '\0';
 			return *this;
-	    }
+		}
 		string& insert(size_t pos, const char* str)
 		{
 			size_t len = strlen(str);
@@ -122,16 +147,18 @@ using namespace std;
 			{
 				reserve(len + _size + 1);
 			}
-			size_t end = _size;
-			while (end >= pos)
+			int end = _size;
+			while (end >= (int)pos)
 			{
 				_str[end + len] = _str[end];
 				end--;
 			}
 			strncpy(_str + pos, str, len);
+			_size += len;
+			_str[_size] = '\0';
 			return *this;
 		}
-		void resize(size_t n,char c='\0')
+		void resize(size_t n, char c = '\0')
 		{
 			if (n < _size)
 			{
@@ -143,7 +170,7 @@ using namespace std;
 				{
 					reserve(n + 1);
 				}
-				for (int i = _size; i < n ;i++)
+				for (int i = _size; i < n; i++)
 				{
 					_str[i] = c;
 				}
@@ -157,10 +184,10 @@ using namespace std;
 			{
 				_size = pos;
 				_str[_size] = '\0';
-		     }
+			}
 			else
 			{
-				while (pos + len <=_size)
+				while (pos + len <= _size)
 				{
 					_str[pos] = _str[pos + len];
 					pos++;
@@ -181,7 +208,7 @@ using namespace std;
 
 		size_t find(const char* s, size_t pos = 0) const
 		{
-			char*p=strstr(_str, s);
+			char* p = strstr(_str, s);
 			if (p == nullptr)
 			{
 				return npos;
@@ -190,6 +217,19 @@ using namespace std;
 			{
 				return p - _str;
 			}
+		}
+
+		bool operator<(const string& s) 
+		{
+			return strcmp(_str, s._str) <0;
+		}
+		bool operator>(const string& s) 
+		{
+			return strcmp(_str, s._str) > 0;
+		}
+		bool operator==(const string& s)
+		{
+			return strcmp(_str, s._str) ==0;
 		}
 	private:
 		size_t _size;
@@ -231,7 +271,15 @@ using namespace std;
 	}
 	void test2()
 	{
-		string s1;
+		string s1("wyh");
 		cout << s1 << endl;
+		string s2(s1);
+		cout << s2 << endl;
+		string s3 = s2;
+		s3.insert(0, 'h');
+		cout << s3 << endl;
+		s3.insert(0, "wer");
+		cout << s3 << endl;
+		cout << (s1 == s2) << endl;
 	}
 };
