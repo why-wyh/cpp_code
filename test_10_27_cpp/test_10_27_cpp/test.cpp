@@ -69,8 +69,47 @@ public:
         return ret;
     }
 };
+//Ñî»ÔÈý½Ç
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> vv(numRows);
+        for (int i = 0; i < numRows; ++i)
+        {
+            vv[i].resize(i + 1);
+            vv[i][0] = 1;
+            vv[i][i] = 1;
+            for (int j = 0; j <= i; ++j)
+            {
+                if (vv[i][j] != 1)
+                {
+                    vv[i][j] = vv[i - 1][j - 1] + vv[i - 1][j];
+                }
+            }
+        }
+
+        return vv;
+    }
+};
+//É¾³ýÖØ¸´Ïî
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int sz = nums.size();
+        int i, j = 0;
+        for (i = 1; i < sz; i++)
+        {
+            if (nums[j] != nums[i])
+            {
+                ++j;
+                nums[j] = nums[i];
+            }
+        }
+        return j + 1;
+    }
+};
 int main()
 {
-	
+  
 	return 0;
 }
