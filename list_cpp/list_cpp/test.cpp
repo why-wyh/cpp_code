@@ -2,6 +2,8 @@
 #include<list>
 using namespace std;
 #include<iostream>
+#include<cassert>
+#include"list.h"
 void list_test1()
 {
 	
@@ -85,7 +87,8 @@ void list_test3()
 }
 int main()
 {
-	list_test1();
+	why::test2();
+	/*list_test1();
 	list_test2();
-	list_test3();
+	list_test3();*/
 }
