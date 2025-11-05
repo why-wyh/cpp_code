@@ -1,4 +1,5 @@
 #include <iostream>
+#include<vector>
 using namespace std;
 //int main()
 //{
@@ -110,18 +111,63 @@ using namespace std;
 //
 //	return 0;
 //}
+//int** vmalloc(int r, int c)
+//{
+//	int** ret;
+//	ret = new int* [r];
+//	for (int i = 0; i < r; ++i)
+//	{
+//		ret[i] = new int[c];
+//	}
+//	return ret;
+//}
+//void vfree(int** arry,int r)
+//{
+//	for(int i=0;i<r;i++)
+//	delete[] arry[i];
+//	delete[]arry;
+//	
+//}
+//int main()
+//{
+//	int cols, rows;
+//	cin >> rows >> cols;
+//	int**arry= vmalloc(rows, cols);
+//	vfree(arry,rows);
+//	return 0;
+//}
+int con(int* arr)
+{
+	int max = arr[0];
+	int min = arr[0];
+	for (int i=0;i<10;i++)
+	{
+		if (max < arr[i])
+			max = arr[i];
+		if (min > arr[i])
+			min = arr[i];
+	}
+	return max - min;
+}
+double con(double* arr)
+{
+	double max = arr[0];
+	double min = arr[0];
+	for (int i = 0; i < 10; i++)
+	{
+		if (max < arr[i])
+			max = arr[i];
+		if (min > arr[i])
+			min = arr[i];
+	}
+	return max - min;
+
+}
 int main()
 {
-	int n,k;
-	cout << "ÇëÊäÈëÇ®Êý" << endl;
-	cin >> n;
-	for (int i = 0; i <= n / 5; i++)
-	{
-		for (int j = 0; j <= n / 3; j++)
-		{
-			k = 100 - i - j;
-			if (k % 3 == 0 && k/3 + i * 5 + j * 3 == n&&k>0)
-				cout << "¹«¼¦£º" << i << "Ä¸¼¦£º" << j << "³û¼¦£º" << k << endl;
-		}
-	}
+	int arr1[] = { 1,2,3,4,5,5,7,8,9,12 };
+
+	double arr2[] = { 1.2,3.4,5.5,7.8,9.12,1.2,3.4,5.6,9.0,8.3 };
+	cout << con(arr1) << endl;
+	cout << con(arr2) << endl;
 }
