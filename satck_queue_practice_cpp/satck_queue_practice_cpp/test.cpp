@@ -43,26 +43,92 @@ public:
 };
 class Solution {
 public:
-    bool IsPopOrder(vector<int> pushV, vector<int> popV) {
-        int n = pushV.size();
-        //辅助栈
-        stack<int> s;
-        //遍历入栈的下标
+    bool IsPopOrder(vector<int>& pushV, vector<int>& popV) {
+        stack<int>st;
+        size_t sz = pushV.size();
         int j = 0;
-        //遍历出栈的数组
-        for (int i = 0; i < n; i++) {
-            //入栈：栈为空或者栈顶不等于出栈数组
-            while (j < n && (s.empty() || s.top() != popV[i])) {
-                s.push(pushV[j]);
-                j++;
+        for (int i = 0; i < sz; ++i)
+        {
+
+            while (j < sz && (st.empty() || (st.top() != popV[i])))
+            {
+                st.push(pushV[j]);
+                ++j;
             }
-            //栈顶等于出栈数组
-            if (s.top() == popV[i])
-                s.pop();
-            //不匹配序列
+            if (st.top() == popV[i])
+                st.pop();
             else
                 return false;
         }
         return true;
+    }
+};
+
+
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int, vector<int>, greater<int>> pq;
+        size_t i = 0;
+        for (; i < k; ++i)
+            pq.push(nums[i]);
+        for (; i < nums.size(); ++i)
+        {
+            if (nums[i] > pq.top())
+            {
+                pq.pop();
+                pq.push(nums[i]);
+            }
+        }
+        return pq.top();
+    }
+};
+
+
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<int>st;
+        int val1, val2;
+        for (auto e : tokens)
+        {
+            if (e != "+" && e != "-" && e != "*" && e != "/")
+            {
+                st.push(stoi(e));
+            }
+            if (e == "+")
+            {
+                val1 = st.top();
+                st.pop();
+                val2 = st.top();
+                st.pop();
+                st.push(val1 + val2);
+            }
+            else if (e == "-")
+            {
+                val1 = st.top();
+                st.pop();
+                val2 = st.top();
+                st.pop();
+                st.push(val2 - val1);
+            }
+            else if (e == "*")
+            {
+                val1 = st.top();
+                st.pop();
+                val2 = st.top();
+                st.pop();
+                st.push(val1 * val2);
+            }
+            else if (e == "/")
+            {
+                val1 = st.top();
+                st.pop();
+                val2 = st.top();
+                st.pop();
+                st.push(val2 / val1);
+            }
+        }
+        return st.top();
     }
 };
