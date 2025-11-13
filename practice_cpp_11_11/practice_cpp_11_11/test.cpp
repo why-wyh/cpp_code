@@ -51,4 +51,6 @@
 int main()
 {
 	why::test_priority_queue();
+	why::test2_priority_queue();
+
 }
