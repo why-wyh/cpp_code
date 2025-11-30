@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include<vector>
 #include<algorithm>
@@ -229,5 +230,316 @@ int main()
 	cin >> S;
 	int num = function(S);
 	cout << num << endl;
+	return 0;
+}
+class ellispe
+{
+public:
+	ellispe(int a = 0, int b = 0)
+		:_a(a)
+		, _b(b)
+	{};
+	ellispe(const ellispe& e)
+	{
+		_a = e._a;
+		_b = e._b;
+	}
+	double area()
+	{
+		return 3.14 * _a * _b;
+	}
+private:
+	int _a;
+	int _b;
+};
+class student
+{
+private:
+	char* _name;
+	int _age;
+public:
+	~student()
+	{
+		_name = nullptr;
+		_age = 0;
+	}
+};
+class String
+{
+	String(const char* s="00000")
+	{
+		strcpy(_s, s);
+	}
+	~String()
+	{
+		_s = nullptr;
+	}
+private:
+	char* _s;
+};
+class item
+{
+public:
+	item(int a)
+	{
+		a = _a;
+	}
+private:
+	int _a;
+};
+int main()
+{
+	ellispe e1(3, 4);
+	cout << e1.area() << endl;
+	return 0;
+}
+class student
+{
+private:
+	char* _name;
+	int _age;
+public:
+	~student()
+	{
+		_name = nullptr;
+		_age = 0;
+	}
+};
+
+
+class String
+{
+	String(const char* s = "00000")
+	{
+		strcpy(_s, s);
+	}
+	~String()
+	{
+		_s = nullptr;
+	}
+private:
+	char* _s;
+};
+
+class item
+{
+public:
+	item(int a)
+	{
+		a = _a;
+	}
+private:
+	int _a;
+};
+class Person
+{
+public:
+	Person( string name = "姓名", int age = 0)
+		: _name(name)
+		, _age(age)
+	{
+		n++;
+	}
+	int& Get_n()
+	{
+		return n;
+	}
+private:
+	string _name;
+	int _age;
+	static int n;
+};
+int Person::n = 0;
+
+class Complex
+{
+public:
+	Complex(int a=0,int b=0)
+		:_a(a)
+		,_b(b)
+	{ }
+	Complex sum(Complex& c)
+	{
+		Complex sum;
+		sum._a = c._a + _a;
+		sum._b = c._b + _b;
+		return sum;
+	}
+	void Show()
+	{
+		cout << _a;
+		cout << "+" << _b << "i" << endl;
+	}
+private:
+	int _a;
+	int _b;
+};
+class point
+{
+public:
+	point(double x=0, double y=0)
+		:_x(x)
+		,_y(y)
+	{ }
+	double& x()
+	{
+		return _x;
+	}
+	double& y()
+	{
+		return _y;
+	}
+private:
+	double _x;
+	double _y;
+};
+class line
+{
+public:
+	line(double a = 0, double b = 0, double c=0)
+		:_a(a)
+		,_b(b)
+		,_c(c)
+	{ }
+	double& a()
+	{
+		return _a;
+	}
+	double& b()
+	{
+		return _b;
+	}
+	double& c()
+	{
+		return _c;
+	}
+private:
+	double _a;
+	double _b;
+	double _c;
+};
+double dist(line l, point p)
+{
+	double n1 = fabs(l.a() * p.x() + l.b() * p.y() + l.c());
+	double n2 = sqrt(l.a() * l.a() + l.b() * l.b());
+	return n1 / n2;
+}
+int main()
+{
+	Person p1;
+	Person p2("wyh",21);
+	Person p3 = p2;
+	cout << p3.Get_n() << endl;
+	Complex c1(1, 1);
+	Complex c2(2, 2);
+	Complex c3 = c2.sum(c1);
+	c1.Show();
+	c2.Show();
+	cout << "c1+c2" << "=";
+	c3.Show();
+	line l1(1, -1, 0);
+	point p1(3, 4);
+	cout << dist(l1, p1) << endl;
+	return 0;
+}
+#include<iostream> 
+using namespace std;
+namespace why
+{
+	class time
+	{
+	public:
+		time(int hour = 24, int minute = 0, int second = 0)
+			: _hour(hour), _minute(minute), _second(second)
+		{
+		}
+		time(const time& other)
+			: _hour(other._hour), _minute(other._minute), _second(other._second)
+		{
+		}
+		void print()
+		{
+			cout << "STANDARD " << _hour << ':' << _minute << ':' << _second << endl;
+		}
+		void print() const
+		{
+			cout << "CONST  " << _hour << ':' << _minute << ':' << _second << endl;
+		}
+	private:
+		int _hour, _minute, _second;
+	};
+}
+int main()
+{
+	why::time a(12, 57, 48);
+	a.print();
+
+	const why::time b(11, 34, 56);
+	b.print();
+}
+class Document
+{
+public:
+protected:
+	int _name;
+};
+class Book :Document
+{
+private:
+	int _PageCount;
+};
+class person
+{
+public:
+	person(const char* name = "Enter your name")
+		:_name(name)
+	{
+	}
+	virtual void show()
+	{
+		cout<<"person::"<<_name << endl;
+	}
+protected:
+	string _name;
+};
+class student:person
+{
+public:
+	student(const char* name="Enter your name",const char* mj="Enter your marjor",const char* ID="Enter your  ID")
+		:person(name)
+		,_mj(mj)
+		, _ID(ID)
+	{ }
+	void show()
+	{
+		cout << "student::" << person::_name << endl;
+		cout << "student::" << _ID << endl;
+		cout << "student::" << _mj << endl;
+	}
+	
+private:
+	string _mj;
+	string _ID;
+};
+typedef void(*VFPTR) ();
+void PrintVTable(VFPTR vTable[])
+{
+	cout << " 虚表地址>" << vTable << endl;
+	for (int i = 0; vTable[i] != nullptr; ++i)
+	{
+		printf(" 第%d个虚函数地址 :0X%x,->", i, vTable[i]);
+		VFPTR f = vTable[i];
+		f();
+	}
+	cout << endl;
+}
+int main()
+{
+	person p1;
+	VFPTR* VTablep1 = (VFPTR*)*(int*)&p1;
+	PrintVTable(VTablep1);
+	student s1;
+	VFPTR* VTables1 = (VFPTR*)*(int*)&s1;
+	PrintVTable(VTables1);
 	return 0;
 }
