@@ -488,58 +488,112 @@ class Book :Document
 private:
 	int _PageCount;
 };
+#include <iostream>
+#include <cstring>
+#include <string>
+using namespace std;
+
 class person
 {
 public:
-	person(const char* name = "Enter your name")
-		:_name(name)
-	{
-	}
-	virtual void show()
-	{
-		cout<<"person::"<<_name << endl;
-	}
+    person(const char* name = "Enter your name")
+        :_name(nullptr)
+    {
+        _name = new char[strlen(name) + 1];
+        strcpy_s(_name, strlen(name) + 1, name); // 使用更安全的strcpy_s
+    }
+
+    virtual ~person() { // 添加虚析构函数
+        delete[] _name;
+    }
+
+    virtual void show()
+    {
+        cout << "person::" << _name << endl;
+    }
+    virtual void func1() {
+        cout << "person::func1" << endl;
+    }
+    virtual void func2() {
+        cout << "person::func2" << endl;
+    }
 protected:
-	string _name;
+    char* _name;
 };
-class student:person
+
+class student : public person // 改为公有继承
 {
 public:
-	student(const char* name="Enter your name",const char* mj="Enter your marjor",const char* ID="Enter your  ID")
-		:person(name)
-		,_mj(mj)
-		, _ID(ID)
-	{ }
-	void show()
-	{
-		cout << "student::" << person::_name << endl;
-		cout << "student::" << _ID << endl;
-		cout << "student::" << _mj << endl;
-	}
-	
+    student(const char* name = "Enter your name", const char* mj = "Enter your major", const char* ID = "Enter your ID")
+        :person(name)
+        , _mj(mj)
+        , _ID(ID)
+    {
+    }
+
+    void show() override
+    {
+        cout << "student::" << _name << endl;
+        cout << "student::" << _ID << endl;
+        cout << "student::" << _mj << endl;
+    }
+
+    void func1() override {
+        cout << "student::func1" << endl;
+    }
+    void func2() override {
+        cout << "student::func2" << endl;
+    }
+    virtual void func3() {
+        cout << "student::func3" << endl;
+    }
+
 private:
-	string _mj;
-	string _ID;
+    string _mj;
+    string _ID;
 };
+
 typedef void(*VFPTR) ();
+
+ 修改打印函数，避免直接调用虚函数
 void PrintVTable(VFPTR vTable[])
 {
-	cout << " 虚表地址>" << vTable << endl;
-	for (int i = 0; vTable[i] != nullptr; ++i)
-	{
-		printf(" 第%d个虚函数地址 :0X%x,->", i, vTable[i]);
-		VFPTR f = vTable[i];
-		f();
-	}
-	cout << endl;
+    cout << "虚表地址: " << vTable << endl;
+    for (int i = 0; vTable[i] != nullptr; ++i)
+    {
+        printf("第%d个虚函数地址: 0X%p\n", i, vTable[i]);
+         注意：直接调用虚函数指针是不安全的，这里只打印地址
+    }
+    cout << endl;
 }
+
 int main()
 {
-	person p1;
-	VFPTR* VTablep1 = (VFPTR*)*(int*)&p1;
-	PrintVTable(VTablep1);
-	student s1;
-	VFPTR* VTables1 = (VFPTR*)*(int*)&s1;
-	PrintVTable(VTables1);
-	return 0;
+    person p1;
+    cout << "p1::Person虚表:" << endl;
+    VFPTR* VTablep1 = (VFPTR*)*(void**)&p1;
+    PrintVTable(VTablep1);
+
+
+    person p2;
+    cout << "p2::Person虚表:" << endl;
+    VFPTR* VTablep2 = (VFPTR*)*(void**)&p2;
+    PrintVTable(VTablep2);
+
+    student s1;
+    cout << "s1::Student虚表:" << endl;
+    VFPTR* VTables1 = (VFPTR*)*(void**)&s1;
+    PrintVTable(VTables1);
+
+    student s2;
+    cout << "s2::Student虚表:" << endl;
+    VFPTR* VTables2 = (VFPTR*)*(void**)&s2;
+    PrintVTable(VTables2);
+
+     测试多态行为
+    cout << "测试多态行为:" << endl;
+    person* ptr = &s1;
+    ptr->show(); // 应该调用student的show
+
+    return 0;
 }
