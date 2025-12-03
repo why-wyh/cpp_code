@@ -11,17 +11,27 @@ namespace why
 			:_ptr(ptr)
 			, p_count(new int(1))
 		{
+			cout << "构造，引用计数: " << *p_count << endl;
+		}
+		Share_ptr(const Share_ptr& other)
+			: _ptr(other._ptr)
+			, p_count(other.p_count)
+		{
+			++(*p_count);
+			cout << "拷贝构造，引用计数: " << *p_count << endl;
 		}
 		~Share_ptr()
 		{
+			cout << "析构:" << *p_count << endl;
+			cout << _ptr << endl;
 			if (--(*p_count) == 0 && _ptr != nullptr)
 			{
 				delete _ptr;
 				_ptr = nullptr;
 				delete p_count;
 				p_count = nullptr;
-				cout << _ptr ;
 			}
+			
 		}
 		T* operator->()
 		{
@@ -34,9 +44,9 @@ namespace why
 		}
 		Share_ptr<T>& operator=(Share_ptr ptr)
 		{
-			if (this != ptr)
+			if (this != &ptr)
 			{
-				if (--(*p_count) == 1)
+				if (--(*p_count) == 0)
 				{
 					delete p_count;
 					delete _ptr;
@@ -47,15 +57,8 @@ namespace why
 		    }
 			return *this;
 		}
-		shared_ptr<T>& operator()( shared_ptr<T>& ptr)
-		{
-			_ptr = ptr._ptr;
-			*(ptr.p_count)++;
-			p_count = ptr.p_count;
-		}
 	private:
 		T* _ptr;
 		int* p_count;
 	};
-
 }
