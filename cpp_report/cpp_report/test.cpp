@@ -597,3 +597,98 @@ int main()
 
     return 0;
 }
+
+
+#include<iostream>
+#include<string.h>
+using namespace std;
+namespace why
+{
+	class string
+	{
+	public:
+		string(const char* str = "Enter str")
+			:_str(nullptr)
+		{
+			_str = new char[strlen(str) + 1];
+			strcpy(_str, str);
+		}
+		string(const string& other)
+			:_str(nullptr)
+		{
+			_str = new char[strlen(other._str) + 1];
+			strcpy(_str, other._str);
+		}
+		string& operator =(const char* str)
+		{
+			if (_str)delete[]_str;
+			_str = new char[strlen(str) + 1];
+			strcpy(_str, str);
+			return *this;
+		}
+		string& operator+(const string& str)
+		{
+			char* temp = new char[strlen(_str) + strlen(str._str) + 1];
+			strcpy(temp, _str);
+			strcat(temp, str._str);
+			string ret(temp);
+			return ret;
+		}
+		 operator char*() const
+		{
+			 return _str;
+		}
+
+	private:
+		char* _str;
+	};
+}
+
+int main()
+{
+	why::string a = "student";
+	why::string b = "good";
+	why::string c;
+	c = a + b;
+	char* p = c;
+	return 0;
+}
+
+class complex
+{
+private:
+	double real, img;
+public:
+	complex(double x1 = 0, double x2 = 0)
+		: real(x1)
+		, img(x2)
+	{
+	};
+
+	bool operator ==(complex c)
+	{
+		return (c.real == real && c.img == img);
+	}
+	bool operator !=(complex c)
+	{
+		return !(*this == c);
+	}
+	friend ostream& operator<<(ostream& os,complex c)
+	{
+		os << c.real << endl;
+		os << c.img << endl;
+		return os;
+	}
+	friend complex operator+(double a, complex c)
+	{
+		return complex(c.real + a, c.real + a);
+	}
+};
+void main()
+{
+	complex a, b(3, 4);
+	if (a != b) cout << "not same " << endl;
+	if (a == 0) cout << "zero " << endl;
+	complex c = 3.5 + b;
+	cout << c << endl;
+}
