@@ -14,13 +14,14 @@ int main()
 			printf("ÍË³öÏµÍ³\n");
 			break;
 		case 1:
-			Creat_product_document(product,&product_count);
 			break;
 		case 2:
+			Creat_product(product, &product_count);
 			break; 
 		case 3:
 				break;
 		case 4:
+			Find_product(product, &product_count);
 			break;
 		case 5:
 			break;
