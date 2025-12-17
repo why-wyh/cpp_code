@@ -1,5 +1,11 @@
 #define _CRT_SECURE_NO_WARNINGS 
 #include"shop.h"
+void Wait()
+{
+	printf("\n按回车键继续...");
+	getchar();
+	getchar();
+}
 void menu()
 {
 	system("cls");
@@ -39,34 +45,20 @@ void menu2()
 	printf("|          0：退出系统             |\n");
 	printf("|**********************************|\n");
 }
-void Display_product(Product* product[100], int* count)
+void menu3()
 {
 	system("cls");
-	if (*count == 0) {
-		printf("当前没有商品信息！\n");
-		printf("\n按回车键继续...");
-		getchar();
-		getchar();
-		return;
-	}
-	printf("|===========================================================|\n");
-	printf("|                    所有商品信息                           |\n");
-	printf("|===========================================================|\n");
-	for (int i = 0; i < *count; i++)
-	{
-		printf("\n\n");
-		printf("商品编号:%d\n",product[i]->ID);
-		printf("商品名称:%s\n", product[i]->name);
-		printf("商品进价:%.2f\n", product[i]->cost_price);
-		printf("商品售价:%.2f\n", product[i]->sell_price);
-		printf("商品销售量:%d\n", product[i]->sales_volume);
-		printf("商品库存量:%d\n", product[i]->stock);
-		printf("销售额：%.2f\n", product[i]->sales_revenue);
-		printf("毛利：%.2f\n", product[i]->profit);
-		printf("\n\n");
-	}
-	Sleep(10000);
+	printf("|**********************************|\n");
+	printf("|          请输入选项编号0-4       |\n");
+	printf("|**********************************|\n");
+	printf("|          1：按照原来顺序显示     |\n");
+	printf("|          2：按照销售额高低显示   |\n");
+	printf("|          3：按照毛利高低显示     |\n");
+	printf("|          4：返回                 |\n");
+	printf("|          0：退出系统             |\n");
+	printf("|**********************************|\n");
 }
+
 
 void Add_new_product(Product* product[100], int* count)
 {
@@ -129,6 +121,7 @@ void Delete_product(Product* product[100], int id,int *count)
 		printf("商品删除成功\n");
 	else
 		printf("未找到商品\n");
+	Wait();
 }
 void Change_product(Product* product[100], int id, int* count)
 {
@@ -154,6 +147,7 @@ void Change_product(Product* product[100], int id, int* count)
 			printf("商品更改成功成功！\n");
 		}
 	}
+	Wait();
 }
 void Creat_product(Product* product[100], int* count)
 {
@@ -170,21 +164,18 @@ void Creat_product(Product* product[100], int* count)
 		case 1:
 			printf("添加商品信息：\n");
 			Add_new_product(product,count);
-			Display_product(product, count);
 			break;
 		case 2:
 			printf("删除商品：\n");
 			printf("请输入要删除的商品ID\n");
 			scanf("%d", &id);
-			Delete_product(product,id,count);
-			Display_product(product, count);
+			Delete_product(product, id, count);
 			break;
 		case 3:
 			printf("修改商品信息：\n");
 			printf("请输入要修改的商品ID\n");
 			scanf("%d", &id);
 			Change_product(product, id, count);
-			Display_product(product, count);
 			break;
 		case 4:
 			printf("返回主菜单\n");
@@ -233,6 +224,7 @@ void Find_by_name(Product* product[100], char* name, int* count)
 	else {
 		printf("没有找到\n");
 	}
+	Wait();
 }
 void Find_by_stock(Product* product[100], int stock, int* count)
 {
@@ -265,6 +257,7 @@ void Find_by_stock(Product* product[100], int stock, int* count)
 		}
 		break;
 	}
+	Wait();
 }
 
 void Find_product(Product* product[100], int* count)
@@ -295,5 +288,183 @@ void Find_product(Product* product[100], int* count)
 			break;
 		}
 	} while (input != 3 && input != 0);
+}
+
+
+
+void Display_by_nothing(Product* product[100], int count)
+{
+	system("cls");
+	if (count == 0) {
+		printf("当前没有商品信息！\n");
+		Wait();
+		return;
+	}
+	printf("|===========================================================|\n");
+	printf("|                    所有商品信息                           |\n");
+	printf("|===========================================================|\n");
+	for (int i = 0; i < count; i++)
+	{
+		printf("\n\n");
+		printf("商品编号:%d\n", product[i]->ID);
+		printf("商品名称:%s\n", product[i]->name);
+		printf("商品进价:%.2f\n", product[i]->cost_price);
+		printf("商品售价:%.2f\n", product[i]->sell_price);
+		printf("商品销售量:%d\n", product[i]->sales_volume);
+		printf("商品库存量:%d\n", product[i]->stock);
+		printf("销售额：%.2f\n", product[i]->sales_revenue);
+		printf("毛利：%.2f\n", product[i]->profit);
+		printf("\n\n");
+	}
+	Wait();
+}
+void swap(Product** product1, Product** product2)
+{
+	Product* temp = *product1;
+	*product1 = *product2;
+	*product2 = temp;
+}
+
+
+
+int partsort_sales_revenue(Product* product[100], int left, int right)
+{
+	int key = left;
+	float pivot_value = product[left]->sales_revenue;
+	while (left < right)
+	{
+		while (product[right]->sales_revenue <= pivot_value && left < right)
+		{
+			right--;
+		}
+		while (product[left]->sales_revenue >= pivot_value && left < right)
+		{
+			left++;
+		}
+		if (left < right)
+		{
+			swap(&product[left], &product[right]);
+		}
+	}
+	swap(&product[key], &product[left]);
+	return left;
+}
+void qsort_sales_revenue(Product* product[100], int begin,int end)
+{
+	if (begin >= end)
+		return;
+	int key = partsort_sales_revenue(product, begin, end);
+	qsort_sales_revenue(product,begin, key-1);
+	qsort_sales_revenue(product, key+1, end);
+}
+void Display_sales_revenue(Product* product[100], int count)
+{
+	Product* temp[100];
+	for (int i = 0; i < count; i++)
+	{
+		temp[i] = product[i];
+	}
+	qsort_sales_revenue(temp,0,count-1);
+	Display_by_nothing(temp, count);
+}
+
+
+
+
+int partsort_profit(Product* product[100], int left, int right)
+{
+	int key = left;
+	float pivot_value = product[left]->profit;
+	while (left < right)
+	{
+		while (product[right]->profit <= pivot_value && left < right)
+		{
+			right--;
+		}
+		while (product[left]->profit >= pivot_value && left < right)
+		{
+			left++;
+		}
+		if (left < right)
+		{
+			swap(&product[left], &product[right]);
+		}
+	}
+	swap(&product[key], &product[left]);
+	return left;
+}
+void qsort_profit(Product* product[100], int begin, int end)
+{
+	if (begin >= end)
+		return;
+	int key = partsort_profit(product, begin, end);
+	qsort_profit(product, begin, key - 1);
+	qsort_profit(product, key + 1, end);
+}
+void Display_profit(Product* product[100], int count)
+{
+	Product* temp[100];
+	for (int i = 0; i < count; i++)
+	{
+		temp[i] = product[i];
+	}
+	qsort_profit(temp, 0, count - 1);
+	Display_by_nothing(temp, count);
+}
+
+
+
+
+void Display_product(Product* product[100], int count)
+{
+	int input = 0;
+	do {
+		menu3();
+		scanf("%d", &input);
+		switch (input)
+		{
+		case 0:
+			printf("退出系统\n");
+			break;
+		case 1:
+			Display_by_nothing(product, count);
+			break;
+		case 2:
+			Display_sales_revenue(product, count);
+			break;
+		case 3:
+			Display_profit(product, count);
+			break;
+		case 4:
+			printf("返回主菜单\n");
+			break;
+		}
+	} while (input != 4 && input != 0);
+}
+
+
+void Statistics_product(Product* product[100], int count)
+{
+
+	system("cls");
+	if (count == 0) {
+		printf("当前没有商品信息！\n");
+		Wait();
+		return;
+	}
+	printf("|===========================================================|\n");
+	printf("|                    所有商品信息                           |\n");
+	printf("|===========================================================|\n");
+	for (int i = 0; i < count; i++)
+	{
+		printf("\n\n");
+		printf("商品编号:%d\n", product[i]->ID);
+		printf("商品名称:%s\n", product[i]->name);
+		printf("商品库存量:%d\n", product[i]->stock);
+		printf("销售额：%.2f\n", product[i]->sales_revenue);
+		printf("毛利：%.2f\n", product[i]->profit);
+		printf("\n\n");
+	}
+	Wait();
 }
 
